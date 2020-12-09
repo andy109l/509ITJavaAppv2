@@ -32,6 +32,7 @@ public class PersContactEditor extends JFrame {
 	private JTextField tfPostcodePers;
 	private JTextField tfCountryPers;
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -70,27 +71,35 @@ public class PersContactEditor extends JFrame {
 		btnRefreshPers.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
 		tfFirstNamePers = new JTextField();
+		tfFirstNamePers.setEnabled(false);
 		tfFirstNamePers.setColumns(10);
 		
 		tfLastNamePers = new JTextField();
+		tfLastNamePers.setEnabled(false);
 		tfLastNamePers.setColumns(10);
 		
 		tfEmailPers = new JTextField();
+		tfEmailPers.setEnabled(false);
 		tfEmailPers.setColumns(10);
 		
 		tfPhonePers = new JTextField();
+		tfPhonePers.setEnabled(false);
 		tfPhonePers.setColumns(10);
 		
 		tfAdressLine1Pers = new JTextField();
+		tfAdressLine1Pers.setEnabled(false);
 		tfAdressLine1Pers.setColumns(10);
 		
 		tfAdressLine2Pers = new JTextField();
+		tfAdressLine2Pers.setEnabled(false);
 		tfAdressLine2Pers.setColumns(10);
 		
 		tfPostcodePers = new JTextField();
+		tfPostcodePers.setEnabled(false);
 		tfPostcodePers.setColumns(10);
 		
 		tfCountryPers = new JTextField();
+		tfCountryPers.setEnabled(false);
 		tfCountryPers.setColumns(10);
 		
 		JLabel lblFirstNamePers = new JLabel("First Name");
@@ -108,91 +117,296 @@ public class PersContactEditor extends JFrame {
 		JLabel lblPostcodePers = new JLabel("Postcode");
 		
 		JLabel lblCountryPers = new JLabel("Country");
+
+		JButton btnSaveSelPers = new JButton("Save Selected");
+
+		btnSaveSelPers.setEnabled(false);
+		
+		JButton btnDeleteSelPers = new JButton("Delete Selected");
+
+		
+		JButton btnAddNewPers = new JButton("Add New");
+
+		
+		JButton btnSaveNewPers = new JButton("Save New");
+		
+		btnSaveNewPers.setEnabled(false);
+		
+		JButton btnBackFPers = new JButton("Exit to Main Menu");
+		btnBackFPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
+		JButton btnUpdateSelPers = new JButton("Update Selelected");
+
+		
+
+		
+		tblPers = new JTable();
+		tblPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				tfFirstNamePers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),1).toString());
+				tfLastNamePers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),2).toString());
+				tfEmailPers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),3).toString());
+				tfPhonePers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),4).toString());
+				tfAdressLine1Pers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),5).toString());
+				tfAdressLine2Pers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),6).toString());
+				tfPostcodePers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),7).toString());
+				tfCountryPers.setText(tblPers.getValueAt(tblPers.getSelectedRow(),8).toString());
+			}
+		});
+		spGridPers.setViewportView(tblPers);
+		
+		//Delete Selected Logic
+		btnDeleteSelPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			String id=tblPers.getValueAt(tblPers.getSelectedRow(), 0).toString();	
+			d.DeletePersonal(id);
+			tblPers.setModel (DbUtils.resultSetToTableModel(d.getAllPersonal()));
+			}
+		});
+		
+		//Save New Button Logic
+		btnSaveNewPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewPers.setEnabled(false);
+				btnAddNewPers.setEnabled(true);
+				btnDeleteSelPers.setEnabled(true);
+				btnSaveSelPers.setEnabled(false);
+				btnUpdateSelPers.setEnabled(true);
+				tfFirstNamePers.setEnabled(false);
+				tfLastNamePers.setEnabled(false);
+				tfEmailPers.setEnabled(false);
+				tfPhonePers.setEnabled(false);
+				tfAdressLine1Pers.setEnabled(false);
+				tfAdressLine2Pers.setEnabled(false);
+				tfPostcodePers.setEnabled(false);
+				tfCountryPers.setEnabled(false);
+				
+				String first_name=tfFirstNamePers.getText();
+				String last_name=tfLastNamePers.getText();
+				String email=tfEmailPers.getText();
+				String phone_number=tfPhonePers.getText();
+				String address_line_1=tfAdressLine1Pers.getText();
+				String address_line_2=tfAdressLine2Pers.getText();
+				String postcode=tfPostcodePers.getText();
+				String country=tfCountryPers.getText();
+				
+				d.InsertPersonal(first_name,last_name,email,phone_number,address_line_1,address_line_2,postcode,country);
+				tblPers.setModel (DbUtils.resultSetToTableModel(d.getAllPersonal()));
+				
+			}
+		});
+		
+		//Add New Button logic
+		btnAddNewPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewPers.setEnabled(true);
+				btnAddNewPers.setEnabled(false);
+				btnDeleteSelPers.setEnabled(false);
+				btnSaveSelPers.setEnabled(false);
+				btnUpdateSelPers.setEnabled(false);
+				tfFirstNamePers.setEnabled(true);
+				tfLastNamePers.setEnabled(true);
+				tfEmailPers.setEnabled(true);
+				tfPhonePers.setEnabled(true);
+				tfAdressLine1Pers.setEnabled(true);
+				tfAdressLine2Pers.setEnabled(true);
+				tfPostcodePers.setEnabled(true);
+				tfCountryPers.setEnabled(true);
+				
+				tblPers.setModel (DbUtils.resultSetToTableModel(d.getAllPersonal()));
+				
+				
+			}
+		});
+		
+		//Update Selected Button logic
+		btnUpdateSelPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewPers.setEnabled(false);
+				btnAddNewPers.setEnabled(false);
+				btnDeleteSelPers.setEnabled(false);
+				btnSaveSelPers.setEnabled(true);
+				btnUpdateSelPers.setEnabled(false);
+				tfFirstNamePers.setEnabled(true);
+				tfLastNamePers.setEnabled(true);
+				tfEmailPers.setEnabled(true);
+				tfPhonePers.setEnabled(true);
+				tfAdressLine1Pers.setEnabled(true);
+				tfAdressLine2Pers.setEnabled(true);
+				tfPostcodePers.setEnabled(true);
+				tfCountryPers.setEnabled(true);
+				
+				tblPers.setModel (DbUtils.resultSetToTableModel(d.getAllPersonal()));
+				
+			}
+		});
+		//Save Selected Button logic
+		btnSaveSelPers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String id=tblPers.getValueAt(tblPers.getSelectedRow(), 0).toString();
+				String first_name=tfFirstNamePers.getText();
+				String last_name=tfLastNamePers.getText();
+				String email=tfEmailPers.getText();
+				String phone_number=tfPhonePers.getText();
+				String address_line_1=tfAdressLine1Pers.getText();
+				String address_line_2=tfAdressLine2Pers.getText();
+				String postcode=tfPostcodePers.getText();
+				String country=tfCountryPers.getText();
+				d.UpdatePersonal(id,first_name,last_name,email,phone_number,address_line_1,address_line_2,postcode,country);
+				btnSaveNewPers.setEnabled(false);
+				btnAddNewPers.setEnabled(true);
+				btnDeleteSelPers.setEnabled(true);
+				btnSaveSelPers.setEnabled(false);
+				btnUpdateSelPers.setEnabled(true);
+				tfFirstNamePers.setEnabled(false);
+				tfLastNamePers.setEnabled(false);
+				tfEmailPers.setEnabled(false);
+				tfPhonePers.setEnabled(false);
+				tfAdressLine1Pers.setEnabled(false);
+				tfAdressLine2Pers.setEnabled(false);
+				tfPostcodePers.setEnabled(false);
+				tfCountryPers.setEnabled(false);
+				
+				tblPers.setModel (DbUtils.resultSetToTableModel(d.getAllPersonal()));
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblFirstNamePers, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-								.addComponent(lblLastNamePers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblEmailPers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblPhonePers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(10)
+							.addComponent(lblFirstNamePers, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(tfFirstNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(123)
+							.addComponent(lblAdressLine1Pers, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(tfAdressLine1Pers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
+							.addGap(43)
+							.addComponent(btnUpdateSelPers, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnAddNewPers, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(tfPhonePers, Alignment.LEADING)
-									.addComponent(tfEmailPers, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
-								.addComponent(tfFirstNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(tfLastNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(58)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblAdressLine2Pers, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-								.addComponent(lblAdressLine1Pers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblPostcodePers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblCountryPers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(18)
+								.addComponent(lblLastNamePers, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblEmailPers, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE))
+							.addGap(4)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(tfPostcodePers, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(tfAdressLine2Pers, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(tfAdressLine1Pers, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-								.addComponent(tfCountryPers, GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
-							.addGap(195))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(btnRefreshPers, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-							.addGap(29))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(spGridPers, GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
-							.addContainerGap())))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfAdressLine1Pers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblAdressLine1Pers))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfAdressLine2Pers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblAdressLine2Pers))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfPostcodePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPostcodePers))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCountryPers)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfFirstNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblFirstNamePers))
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(tfLastNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblLastNamePers))
+								.addComponent(tfEmailPers, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
+							.addGap(58)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblAdressLine2Pers, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPostcodePers, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(tfEmailPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblEmailPers))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(tfAdressLine2Pers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
+								.addComponent(tfPostcodePers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE))
+							.addGap(43)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnSaveSelPers, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnSaveNewPers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(btnDeleteSelPers, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(lblPhonePers, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(tfPhonePers, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+							.addGap(58)
+							.addComponent(lblCountryPers, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(tfPhonePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPhonePers))))
-					.addGap(76)
-					.addComponent(btnRefreshPers)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(spGridPers, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
+							.addGap(155)
+							.addComponent(btnBackFPers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(586)
+							.addComponent(btnRefreshPers, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(spGridPers, GroupLayout.PREFERRED_SIZE, 862, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
-		
-		tblPers = new JTable();
-		spGridPers.setViewportView(tblPers);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(11)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(3)
+							.addComponent(lblFirstNamePers))
+						.addComponent(tfFirstNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(4)
+							.addComponent(lblAdressLine1Pers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(1)
+							.addComponent(tfAdressLine1Pers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnUpdateSelPers)
+							.addComponent(btnAddNewPers)))
+					.addGap(6)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(12)
+							.addComponent(lblLastNamePers)
+							.addGap(24)
+							.addComponent(lblEmailPers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(9)
+							.addComponent(tfLastNamePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(tfEmailPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(15)
+							.addComponent(lblAdressLine2Pers)
+							.addGap(21)
+							.addComponent(lblPostcodePers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(12)
+							.addComponent(tfAdressLine2Pers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(15)
+							.addComponent(tfPostcodePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnSaveSelPers)
+								.addComponent(btnSaveNewPers))
+							.addGap(6)
+							.addComponent(btnDeleteSelPers)))
+					.addGap(15)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(9)
+							.addComponent(lblPhonePers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(3)
+							.addComponent(tfPhonePers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(4)
+							.addComponent(lblCountryPers))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(3)
+							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnBackFPers))
+					.addPreferredGap(ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+					.addComponent(btnRefreshPers)
+					.addGap(11)
+					.addComponent(spGridPers, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE))
+		);
 		contentPane.setLayout(gl_contentPane);
 	}
 }

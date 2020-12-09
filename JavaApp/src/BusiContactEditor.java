@@ -25,11 +25,18 @@ public class BusiContactEditor extends JFrame {
 	private JTextField tfLastNameBusi;
 	private JTextField tfEmailBusi;
 	private JTextField tfPhoneBusi;
-	private JTextField tfCompanyBusi;
 	private JTextField tfAddressLine1Busi;
 	private JTextField tfAddressLine2Busi;
 	private JTextField tfPostcodeBusi;
 	private JTextField tfCountryBusi;
+	private JButton btnUpdateSelBusi;
+	private JButton btnSaveSelBusi;
+	private JButton btnDeleteSelBusi;
+	private JButton btnAddNewBusi;
+	private JButton btnSaveNewBusi;
+	private JButton btnBackFBusi;
+	private JTextField tfCompanyBusi;
+	private JLabel lblCompanyBusi;
 
 	/**
 	 * Launch the application.
@@ -52,17 +59,31 @@ public class BusiContactEditor extends JFrame {
 	 */
 	public BusiContactEditor() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 895, 552);
+		setBounds(100, 100, 1008, 561);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane spGridBusi = new JScrollPane();
-		spGridBusi.setBounds(10, 271, 861, 233);
+		spGridBusi.setBounds(10, 271, 984, 242);
 		contentPane.add(spGridBusi);
 		
 		tblBusi = new JTable();
+		tblBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				tfFirstNameBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),1).toString());
+				tfLastNameBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),2).toString());
+				tfEmailBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),3).toString());
+				tfAddressLine1Busi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),5).toString());
+				tfAddressLine2Busi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),6).toString());
+				tfPostcodeBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),7).toString());
+				tfCountryBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),8).toString());
+				tfCompanyBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),9).toString());
+				tfPhoneBusi.setText(tblBusi.getValueAt(tblBusi.getSelectedRow(),10).toString());
+			}
+		});
 		spGridBusi.setViewportView(tblBusi);
 		
 		DbConn d=new  DbConn();
@@ -73,50 +94,53 @@ public class BusiContactEditor extends JFrame {
 				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
 			}
 		});
-		btnRefreshBusi.setBounds(724, 229, 98, 31);
+		btnRefreshBusi.setBounds(800, 229, 98, 31);
 		contentPane.add(btnRefreshBusi);
 		
 		tfFirstNameBusi = new JTextField();
-		tfFirstNameBusi.setBounds(112, 11, 96, 20);
+		tfFirstNameBusi.setEnabled(false);
+		tfFirstNameBusi.setBounds(147, 11, 96, 20);
 		contentPane.add(tfFirstNameBusi);
 		tfFirstNameBusi.setColumns(10);
 		
 		tfLastNameBusi = new JTextField();
-		tfLastNameBusi.setBounds(112, 42, 96, 20);
+		tfLastNameBusi.setEnabled(false);
+		tfLastNameBusi.setBounds(147, 42, 96, 20);
 		contentPane.add(tfLastNameBusi);
 		tfLastNameBusi.setColumns(10);
 		
 		tfEmailBusi = new JTextField();
-		tfEmailBusi.setBounds(112, 104, 199, 20);
+		tfEmailBusi.setEnabled(false);
+		tfEmailBusi.setBounds(147, 104, 199, 20);
 		contentPane.add(tfEmailBusi);
 		tfEmailBusi.setColumns(10);
 		
 		tfPhoneBusi = new JTextField();
-		tfPhoneBusi.setBounds(112, 135, 199, 20);
+		tfPhoneBusi.setEnabled(false);
+		tfPhoneBusi.setBounds(147, 135, 199, 20);
 		contentPane.add(tfPhoneBusi);
 		tfPhoneBusi.setColumns(10);
 		
-		tfCompanyBusi = new JTextField();
-		tfCompanyBusi.setBounds(463, 135, 199, 20);
-		contentPane.add(tfCompanyBusi);
-		tfCompanyBusi.setColumns(10);
-		
 		tfAddressLine1Busi = new JTextField();
+		tfAddressLine1Busi.setEnabled(false);
 		tfAddressLine1Busi.setBounds(463, 11, 199, 20);
 		contentPane.add(tfAddressLine1Busi);
 		tfAddressLine1Busi.setColumns(10);
 		
 		tfAddressLine2Busi = new JTextField();
+		tfAddressLine2Busi.setEnabled(false);
 		tfAddressLine2Busi.setBounds(463, 42, 199, 20);
 		contentPane.add(tfAddressLine2Busi);
 		tfAddressLine2Busi.setColumns(10);
 		
 		tfPostcodeBusi = new JTextField();
+		tfPostcodeBusi.setEnabled(false);
 		tfPostcodeBusi.setBounds(463, 73, 199, 20);
 		contentPane.add(tfPostcodeBusi);
 		tfPostcodeBusi.setColumns(10);
 		
 		tfCountryBusi = new JTextField();
+		tfCountryBusi.setEnabled(false);
 		tfCountryBusi.setBounds(463, 104, 199, 20);
 		contentPane.add(tfCountryBusi);
 		tfCountryBusi.setColumns(10);
@@ -134,27 +158,175 @@ public class BusiContactEditor extends JFrame {
 		contentPane.add(lblEmailBusi);
 		
 		JLabel lblPhoneBusi = new JLabel("Business Phone num.");
-		lblPhoneBusi.setBounds(10, 138, 110, 14);
+		lblPhoneBusi.setBounds(10, 138, 127, 14);
 		contentPane.add(lblPhoneBusi);
 		
 		JLabel lblAddressLine1Busi = new JLabel("Address Line 1");
-		lblAddressLine1Busi.setBounds(376, 14, 77, 14);
+		lblAddressLine1Busi.setBounds(356, 14, 97, 14);
 		contentPane.add(lblAddressLine1Busi);
 		
 		JLabel lblAddressLine2Busi = new JLabel("Address Line 2");
-		lblAddressLine2Busi.setBounds(376, 45, 77, 14);
+		lblAddressLine2Busi.setBounds(356, 45, 97, 14);
 		contentPane.add(lblAddressLine2Busi);
 		
 		JLabel lblPostcodeBusi = new JLabel("Postcode");
-		lblPostcodeBusi.setBounds(376, 76, 77, 14);
+		lblPostcodeBusi.setBounds(356, 76, 97, 14);
 		contentPane.add(lblPostcodeBusi);
 		
 		JLabel lblCountryBusi = new JLabel("Country");
-		lblCountryBusi.setBounds(376, 107, 77, 14);
+		lblCountryBusi.setBounds(356, 107, 97, 14);
 		contentPane.add(lblCountryBusi);
 		
-		JLabel lblCompanyBusi = new JLabel("Company");
-		lblCompanyBusi.setBounds(376, 138, 77, 14);
+		btnUpdateSelBusi = new JButton("Update Selected");
+		btnUpdateSelBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewBusi.setEnabled(false);
+				btnAddNewBusi.setEnabled(false);
+				btnDeleteSelBusi.setEnabled(false);
+				btnSaveSelBusi.setEnabled(true);
+				btnUpdateSelBusi.setEnabled(false);
+				tfFirstNameBusi.setEnabled(true);
+				tfLastNameBusi.setEnabled(true);
+				tfEmailBusi.setEnabled(true);
+				tfPhoneBusi.setEnabled(true);
+				tfAddressLine1Busi.setEnabled(true);
+				tfAddressLine2Busi.setEnabled(true);
+				tfPostcodeBusi.setEnabled(true);
+				tfCountryBusi.setEnabled(true);
+				tfCompanyBusi.setEnabled(true);
+				
+				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
+			}
+		});
+		btnUpdateSelBusi.setBounds(699, 10, 135, 23);
+		contentPane.add(btnUpdateSelBusi);
+		
+		btnSaveSelBusi = new JButton("Save Selected");
+		btnSaveSelBusi.setEnabled(false);
+		btnSaveSelBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String id=tblBusi.getValueAt(tblBusi.getSelectedRow(), 0).toString();
+				String first_name=tfFirstNameBusi.getText();
+				String last_name=tfLastNameBusi.getText();
+				String email=tfEmailBusi.getText();
+				String business_phone_number=tfPhoneBusi.getText();
+				String address_line_1=tfAddressLine1Busi.getText();
+				String address_line_2=tfAddressLine2Busi.getText();
+				String postcode=tfPostcodeBusi.getText();
+				String country=tfCountryBusi.getText();
+				String company=tfCompanyBusi.getText();
+				
+				d.UpdateBusiness(id,first_name,last_name,email,address_line_1,address_line_2,postcode,country,company,business_phone_number);
+				
+				btnSaveNewBusi.setEnabled(false);
+				btnAddNewBusi.setEnabled(true);
+				btnDeleteSelBusi.setEnabled(true);
+				btnSaveSelBusi.setEnabled(false);
+				btnUpdateSelBusi.setEnabled(true);
+				tfFirstNameBusi.setEnabled(false);
+				tfLastNameBusi.setEnabled(false);
+				tfEmailBusi.setEnabled(false);
+				tfPhoneBusi.setEnabled(false);
+				tfAddressLine1Busi.setEnabled(false);
+				tfAddressLine2Busi.setEnabled(false);
+				tfPostcodeBusi.setEnabled(false);
+				tfCountryBusi.setEnabled(false);
+				tfCompanyBusi.setEnabled(false);
+				
+				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
+			}
+		});
+		btnSaveSelBusi.setBounds(699, 41, 135, 23);
+		contentPane.add(btnSaveSelBusi);
+		
+		btnDeleteSelBusi = new JButton("Delete Selected");
+		btnDeleteSelBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String id=tblBusi.getValueAt(tblBusi.getSelectedRow(), 0).toString();	
+				d.DeleteBusiness(id);
+				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
+			}
+		});
+		btnDeleteSelBusi.setBounds(699, 72, 135, 23);
+		contentPane.add(btnDeleteSelBusi);
+		
+		btnAddNewBusi = new JButton("Add New");
+		btnAddNewBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewBusi.setEnabled(true);
+				btnAddNewBusi.setEnabled(false);
+				btnDeleteSelBusi.setEnabled(false);
+				btnSaveSelBusi.setEnabled(false);
+				btnUpdateSelBusi.setEnabled(false);
+				tfFirstNameBusi.setEnabled(true);
+				tfLastNameBusi.setEnabled(true);
+				tfEmailBusi.setEnabled(true);
+				tfPhoneBusi.setEnabled(true);
+				tfAddressLine1Busi.setEnabled(true);
+				tfAddressLine2Busi.setEnabled(true);
+				tfPostcodeBusi.setEnabled(true);
+				tfCountryBusi.setEnabled(true);
+				tfCompanyBusi.setEnabled(true);
+				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
+			}
+		});
+		btnAddNewBusi.setBounds(877, 10, 107, 23);
+		contentPane.add(btnAddNewBusi);
+		
+		btnSaveNewBusi = new JButton("Save New");
+		btnSaveNewBusi.setEnabled(false);
+		btnSaveNewBusi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveNewBusi.setEnabled(false);
+				btnAddNewBusi.setEnabled(true);
+				btnDeleteSelBusi.setEnabled(true);
+				btnSaveSelBusi.setEnabled(false);
+				btnUpdateSelBusi.setEnabled(true);
+				tfFirstNameBusi.setEnabled(false);
+				tfLastNameBusi.setEnabled(false);
+				tfEmailBusi.setEnabled(false);
+				tfPhoneBusi.setEnabled(false);
+				tfAddressLine1Busi.setEnabled(false);
+				tfAddressLine2Busi.setEnabled(false);
+				tfPostcodeBusi.setEnabled(false);
+				tfCountryBusi.setEnabled(false);
+				tfCompanyBusi.setEnabled(false);
+				
+				String first_name=tfFirstNameBusi.getText();
+				String last_name=tfLastNameBusi.getText();
+				String email=tfEmailBusi.getText();
+				String business_phone_number=tfPhoneBusi.getText();
+				String address_line_1=tfAddressLine1Busi.getText();
+				String address_line_2=tfAddressLine2Busi.getText();
+				String postcode=tfPostcodeBusi.getText();
+				String country=tfCountryBusi.getText();
+				String company=tfCompanyBusi.getText();
+				
+				d.InsertBusiness(first_name, last_name, email, address_line_1, address_line_2, postcode, country, company, business_phone_number);
+				tblBusi.setModel (DbUtils.resultSetToTableModel(d.getAllBusiness()));
+			
+			}
+		});
+		btnSaveNewBusi.setBounds(877, 41, 107, 23);
+		contentPane.add(btnSaveNewBusi);
+		
+		btnBackFBusi = new JButton("Exit to Main Menu");
+		btnBackFBusi.setBounds(820, 160, 164, 23);
+		contentPane.add(btnBackFBusi);
+		
+		tfCompanyBusi = new JTextField();
+		tfCompanyBusi.setEnabled(false);
+		tfCompanyBusi.setBounds(463, 135, 199, 20);
+		contentPane.add(tfCompanyBusi);
+		tfCompanyBusi.setColumns(10);
+		
+		lblCompanyBusi = new JLabel("Company");
+		lblCompanyBusi.setBounds(356, 138, 97, 14);
 		contentPane.add(lblCompanyBusi);
 	}
 }
