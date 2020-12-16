@@ -61,6 +61,9 @@ public class PersContactEditor extends JFrame {
 		
 		JScrollPane spGridPers = new JScrollPane();
 		DbConn d=new  DbConn();
+		/*
+		 * on click populates/updates the tblPers with data retrieved from the database using the method getAllPersonal
+		 */
 		JButton btnRefreshPers = new JButton("Refresh");
 		btnRefreshPers.addMouseListener(new MouseAdapter() {
 			@Override
@@ -132,18 +135,13 @@ public class PersContactEditor extends JFrame {
 		
 		btnSaveNewPers.setEnabled(false);
 		
-		JButton btnBackFPers = new JButton("Exit to Main Menu");
-		btnBackFPers.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		
 		JButton btnUpdateSelPers = new JButton("Update Selelected");
 
 		
 
-		
+		/*
+		 * on click populates the text fields with the data from selected tblPers row 
+		 */
 		tblPers = new JTable();
 		tblPers.addMouseListener(new MouseAdapter() {
 			@Override
@@ -160,7 +158,9 @@ public class PersContactEditor extends JFrame {
 		});
 		spGridPers.setViewportView(tblPers);
 		
-		//Delete Selected Logic
+		/*
+		 * on click deletes selected business contact from the database
+		 */
 		btnDeleteSelPers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,7 +170,11 @@ public class PersContactEditor extends JFrame {
 			}
 		});
 		
-		//Save New Button Logic
+		/*
+		 * on click toggles all the required buttons and text fields used to save new personal contact
+		 * saves contacts in the database
+		 * reloads the data in the tblPers
+		 */
 		btnSaveNewPers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -203,7 +207,9 @@ public class PersContactEditor extends JFrame {
 			}
 		});
 		
-		//Add New Button logic
+		/*
+		 * on click toggles all the required buttons and text fields used to add new personal contact
+		 */
 		btnAddNewPers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -227,7 +233,9 @@ public class PersContactEditor extends JFrame {
 			}
 		});
 		
-		//Update Selected Button logic
+		/*
+		 * on click toggles all the required buttons and text fields used to update selected personal contact
+		 */
 		btnUpdateSelPers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -249,7 +257,11 @@ public class PersContactEditor extends JFrame {
 				
 			}
 		});
-		//Save Selected Button logic
+		/*
+		 * on click toggles all the required buttons and text fields used to save selected personal contact
+		 * saves the updated contacts in the database
+		 * reloads the data in the tblPers
+		 */
 		btnSaveSelPers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -330,9 +342,7 @@ public class PersContactEditor extends JFrame {
 							.addGap(58)
 							.addComponent(lblCountryPers, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE)
-							.addGap(155)
-							.addComponent(btnBackFPers))
+							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, 162, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(586)
 							.addComponent(btnRefreshPers, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
@@ -400,8 +410,7 @@ public class PersContactEditor extends JFrame {
 							.addComponent(lblCountryPers))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(3)
-							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnBackFPers))
+							.addComponent(tfCountryPers, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
 					.addComponent(btnRefreshPers)
 					.addGap(11)

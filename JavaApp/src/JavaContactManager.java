@@ -41,7 +41,10 @@ public class JavaContactManager {
 		frame.setBounds(100, 100, 618, 385);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		/*
+		 * on click creates a new instance of personal contact editor frame and displays it
+		 * disposes of JavaContactManager frame
+		 */
 		JButton btnPersConctats = new JButton("Personal Contacts");
 		btnPersConctats.addMouseListener(new MouseAdapter() {
 			@Override
@@ -54,7 +57,10 @@ public class JavaContactManager {
 		btnPersConctats.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnPersConctats.setBounds(101, 159, 140, 41);
 		frame.getContentPane().add(btnPersConctats);
-		
+		/*
+		 * on click creates a new instance of business contact editor frame and displays it
+		 * disposes of JavaContactManager frame
+		 */
 		JButton btnNewButton_1 = new JButton("Business Contacts");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override

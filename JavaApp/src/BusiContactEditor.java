@@ -34,7 +34,6 @@ public class BusiContactEditor extends JFrame {
 	private JButton btnDeleteSelBusi;
 	private JButton btnAddNewBusi;
 	private JButton btnSaveNewBusi;
-	private JButton btnBackFBusi;
 	private JTextField tfCompanyBusi;
 	private JLabel lblCompanyBusi;
 
@@ -68,7 +67,9 @@ public class BusiContactEditor extends JFrame {
 		JScrollPane spGridBusi = new JScrollPane();
 		spGridBusi.setBounds(10, 271, 984, 242);
 		contentPane.add(spGridBusi);
-		
+		/*
+		 * on click populates the text fields with the data from selected tblBusi row
+		 */
 		tblBusi = new JTable();
 		tblBusi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -85,7 +86,9 @@ public class BusiContactEditor extends JFrame {
 			}
 		});
 		spGridBusi.setViewportView(tblBusi);
-		
+		/*
+		 * on click populates/updates the tblBusi with data retrieved from the database using the method getAllBusiness
+		 */
 		DbConn d=new  DbConn();
 		JButton btnRefreshBusi = new JButton("Refresh");
 		btnRefreshBusi.addMouseListener(new MouseAdapter() {
@@ -176,7 +179,10 @@ public class BusiContactEditor extends JFrame {
 		JLabel lblCountryBusi = new JLabel("Country");
 		lblCountryBusi.setBounds(356, 107, 97, 14);
 		contentPane.add(lblCountryBusi);
-		
+		/*
+		 * on click toggles all the required buttons and text fields used to update selected business contact
+		 * populates/updates the tblBusi with data retrieved from the database
+		 */
 		btnUpdateSelBusi = new JButton("Update Selected");
 		btnUpdateSelBusi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -201,7 +207,9 @@ public class BusiContactEditor extends JFrame {
 		});
 		btnUpdateSelBusi.setBounds(699, 10, 135, 23);
 		contentPane.add(btnUpdateSelBusi);
-		
+		/*
+		 * on click toggles all the required buttons and text fields used to save selected business contact
+		 */
 		btnSaveSelBusi = new JButton("Save Selected");
 		btnSaveSelBusi.setEnabled(false);
 		btnSaveSelBusi.addMouseListener(new MouseAdapter() {
@@ -240,7 +248,9 @@ public class BusiContactEditor extends JFrame {
 		});
 		btnSaveSelBusi.setBounds(699, 41, 135, 23);
 		contentPane.add(btnSaveSelBusi);
-		
+		/*
+		 * on click deletes selected business contact from the database
+		 */
 		btnDeleteSelBusi = new JButton("Delete Selected");
 		btnDeleteSelBusi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -252,7 +262,9 @@ public class BusiContactEditor extends JFrame {
 		});
 		btnDeleteSelBusi.setBounds(699, 72, 135, 23);
 		contentPane.add(btnDeleteSelBusi);
-		
+		/*
+		 * on click toggles all the required buttons and text fields used to add new business contact
+		 */
 		btnAddNewBusi = new JButton("Add New");
 		btnAddNewBusi.addMouseListener(new MouseAdapter() {
 			@Override
@@ -276,7 +288,11 @@ public class BusiContactEditor extends JFrame {
 		});
 		btnAddNewBusi.setBounds(877, 10, 107, 23);
 		contentPane.add(btnAddNewBusi);
-		
+		/*
+		 * on click toggles all the required buttons and text fields used to save new business contact
+		 * saves contacts in the database
+		 * reloads the data in the tblBusi
+		 */
 		btnSaveNewBusi = new JButton("Save New");
 		btnSaveNewBusi.setEnabled(false);
 		btnSaveNewBusi.addMouseListener(new MouseAdapter() {
@@ -314,10 +330,6 @@ public class BusiContactEditor extends JFrame {
 		});
 		btnSaveNewBusi.setBounds(877, 41, 107, 23);
 		contentPane.add(btnSaveNewBusi);
-		
-		btnBackFBusi = new JButton("Exit to Main Menu");
-		btnBackFBusi.setBounds(820, 160, 164, 23);
-		contentPane.add(btnBackFBusi);
 		
 		tfCompanyBusi = new JTextField();
 		tfCompanyBusi.setEnabled(false);

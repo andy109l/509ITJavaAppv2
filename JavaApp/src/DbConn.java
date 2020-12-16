@@ -10,7 +10,9 @@ public class DbConn {
 	String username = "root";
 	String password = "";
 	Connection con = null;
-	
+	/**
+	 * concatenates connection sting to the database
+	 */
 	public DbConn()
 	{
 		try {
@@ -22,7 +24,10 @@ public class DbConn {
 			System.out.println("Connection Failed");
 		}
 	}
-	
+	/**
+	 * retrieves personal contacts data using select_all_personal stored procedure, formats it to ResultSet
+	 * @return
+	 */
 	public ResultSet getAllPersonal() 
 	{
 		ResultSet rs=null;
@@ -37,7 +42,10 @@ public class DbConn {
 		return rs;
 		
 	}
-	
+	/**
+	 * retrieves businss contacts data using select_all_business stored procedure, formats it to ResultSet
+	 * @return
+	 */
 	public ResultSet getAllBusiness() 
 	{
 		ResultSet rs=null;
@@ -52,7 +60,18 @@ public class DbConn {
 		return rs;
 		
 	}
-	
+	/**
+	 * Updates the personal contact data in the database based on the id, using the update_personal stored procedure
+	 * @param id
+	 * @param first_name
+	 * @param last_name
+	 * @param email
+	 * @param phone_number
+	 * @param address_line_1
+	 * @param address_line_2
+	 * @param postcode
+	 * @param country
+	 */
 	public void UpdatePersonal(String id, String first_name,String last_name,String email,String phone_number,String address_line_1,String address_line_2,String postcode,String country) 
 	{
 		ResultSet rs=null;
@@ -75,7 +94,19 @@ public class DbConn {
 		}
 		
 	}
-	
+	/**
+	 * Updates the business contact data in the database based on the id, using the update_business stored procedure
+	 * @param id
+	 * @param first_name
+	 * @param last_name
+	 * @param email
+	 * @param address_line_1
+	 * @param address_line_2
+	 * @param postcode
+	 * @param country
+	 * @param company
+	 * @param business_phone_number
+	 */
 	public void UpdateBusiness(String id, String first_name,String last_name,String email,String address_line_1,String address_line_2,String postcode,String country,String company,String business_phone_number) 
 	{
 		ResultSet rs=null;
@@ -99,7 +130,17 @@ public class DbConn {
 		}
 		
 	}
-	
+	/**
+	 * Insets the personal contact data from the object into database using the add_personal stored procedure
+	 * @param first_name
+	 * @param last_name
+	 * @param email
+	 * @param phone_number
+	 * @param address_line_1
+	 * @param address_line_2
+	 * @param postcode
+	 * @param country
+	 */
 	public void InsertPersonal(String first_name,String last_name,String email,String phone_number,String address_line_1,String address_line_2,String postcode,String country) 
 	{
 		String sql="{call add_personal(?,?,?,?,?,?,?,?)}";
@@ -121,7 +162,18 @@ public class DbConn {
 		}
 		
 	}
-	
+	/**
+	 * Insets the business contact data from the object into database using the add_business stored procedure
+	 * @param first_name
+	 * @param last_name
+	 * @param email
+	 * @param address_line_1
+	 * @param address_line_2
+	 * @param postcode
+	 * @param country
+	 * @param company
+	 * @param business_phone_number
+	 */
 	public void InsertBusiness(String first_name,String last_name,String email,String address_line_1,String address_line_2,String postcode,String country,String company,String business_phone_number) 
 	{
 		String sql="{call add_business(?,?,?,?,?,?,?,?,?)}";
@@ -144,7 +196,10 @@ public class DbConn {
 		}
 		
 	}
-	
+	/**
+	 * Deletes the personal contact data in the database based on the id, using the delete_business stored procedure
+	 * @param id
+	 */
 	public void DeletePersonal (String id)
 	{
 		String sql="{call delete_personal(?)}";
@@ -158,7 +213,10 @@ public class DbConn {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Deletes the business contact data in the database based on the id, using the delete_business stored procedure
+	 * @param id
+	 */
 	public void DeleteBusiness (String id)
 	{
 		String sql="{call delete_business(?)}";
